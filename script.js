@@ -48,9 +48,6 @@ function changerCouleurFondEnFonctionHeure() {
         // Appel de la fonction pour générer les gouttes de pluie
         createRainAnimation();
         break;
-      case 'Snow':
-        body.classList.add('snowy-weather');
-        break;
       case 'Thunderstorm':
         body.classList.add('stormy-weather');
         break;
@@ -61,21 +58,34 @@ function changerCouleurFondEnFonctionHeure() {
   }
   
   // Fonction pour obtenir les données météorologiques de l'API OpenWeather
-  function getWeatherData() {
-    const apiKey = '88bc94801f231ebb90eabf0b4f4c6d5a'; // Remplacez par votre clé API
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=Paris&appid=${apiKey}`;
+function getWeatherData() {
+    // Demander la permission de l'utilisateur pour accéder à sa position géographique
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const apiKey = '88bc94801f231ebb90eabf0b4f4c6d5a'; // Utilise ta clé API
+        const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
   
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const weatherCondition = data.weather[0].main;
-        changeWeatherTheme(weatherCondition);
-      })
-      .catch(error => console.error('Erreur lors de la récupération des données météo:', error));
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            const weatherCondition = data.weather[0].main;
+            changeWeatherTheme(weatherCondition);
+          })
+          .catch(error => console.error('Erreur lors de la récupération des données météo:', error));
+      }, (error) => {
+        // Gérer les erreurs de géolocalisation ici
+        console.error('La géolocalisation a été refusée ou une erreur est survenue:', error);
+      });
+    } else {
+      console.error('La géolocalisation n\'est pas prise en charge par ce navigateur.');
+    }
   }
   
   // Appel de la fonction pour obtenir les données météo au chargement de la page
   document.addEventListener('DOMContentLoaded', getWeatherData);
+  
   
   // Fonction pour créer l'animation de pluie
 function createRainAnimation() {
@@ -140,10 +150,6 @@ function resolveEquation() {
     }
 
     document.getElementById('solution').innerText = `x1 = ${x1} et x2 = ${x2}`;
-
-    var isDaytime = checkDaytime();
-
-    fetchWeatherInfo(isDaytime);
 }
 
 // Fonction pour convertir une chaîne de caractères représentant un nombre complexe en objet contenant ses parties réelle et imaginaire
@@ -181,21 +187,6 @@ function formatComplexNumber(real, imaginary) {
     }
 }
 
-/* Fonction pour vérifier s'il fait jour en fonction de l'heure locale de la machine
-function checkDaytime() {
-    var currentHour = new Date().getHours();
-    return currentHour >= 6 && currentHour < 18;
-}*/
-
-
-
-
-
-
-    
-
-
-
 // Fonction pour démarrer l'animation du pterodactyle
 function animatePterodactyl() {
     var pterodactylContainer = document.getElementById('pterodactylContainer');
@@ -210,50 +201,5 @@ function animatePterodactyl() {
             position--;
             pterodactylContainer.style.left = position + '%';
         }
-    }
-}
-
-// Fonction pour récupérer les informations météorologiques à partir de l'API OpenWeather
-function fetchWeatherInfo(isDaytime) {
-    var apiKey = '4d0168f1babd4e74801d4aa39f749660';
-    // Récupère les coordonnées géographiques de l'utilisateur
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
-        var apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&`;
-        try {
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    var isRaining = isRaining(data);
-                    applyWeatherStyles(isDaytime, isRaining);
-                })
-                .catch(error => console.error('Error fetching weather data:', error));
-        } catch (error) {
-            alert("Impossible de récupérer les informations météorologiques. Veuillez réessayer plus tard.");
-        }
-    });
-}
-
-// Fonction pour vérifier s'il pleut
-function isRaining(weatherData) {
-    return weatherData.weather.some(weather => weather.main.toLowerCase().includes('rain'));
-}
-
-// Fonction pour appliquer les styles en fonction des conditions météorologiques
-function applyWeatherStyles(isDaytime, isRaining) {
-    var body = document.body;
-    if (isDaytime) {
-        document.querySelector('.my-body').style.backgroundColor = '#f8f8ff';
-        document.querySelector('.my-body').style.color = '#000';
-    } else {
-        document.querySelector('.my-body').style.backgroundColor = '#000';
-        document.querySelector('.my-body').style.color = '#fff';
-    }
-    var rainDiv = document.querySelector('.rain');
-    if (isRaining) {
-        rain.removeAttribute('hidden');
-    } else {
-        rain.setAttribute('hidden', true);
     }
 }
