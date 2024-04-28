@@ -1,0 +1,160 @@
+* {
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.calculatrice {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid lightgray;
+}
+
+.my-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.my-subtext {
+    font-size: 16px;
+    color: #666;
+    margin: 20px 0 0 0;
+}
+
+.my-form {
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.input-block-text {
+    width: 60px;
+    height: 40px;
+    font-size: 18px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.my-button {
+    background-color: #4c8baf;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.my-button:hover {
+    background-color: #45a049;
+}
+
+.animation {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 3px;
+    border: 2px solid lightgray;
+    height: 150px;
+    overflow: hidden;
+}
+
+.my-anim-1 {
+    position: relative;
+    width: 100%;
+    animation: moveAnimation 5s linear infinite;
+}
+
+@keyframes moveAnimation {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.icon-anim-1 {
+    width: 12%;
+    height: 60;
+}
+
+.icon-anim-2 {
+    width: 12%;
+    height: 60;
+    transform: scaleX(-1);
+}
+
+.my-anim-2 {
+    position: relative;
+    width: 100%;
+}
+
+.icon-anim-rain {
+    width: 12%;
+    height: 60%;
+    margin-top: -60px;
+}
+
+.clear-weather {
+    /* Styles pour le temps clair */
+    background-color: #f0e68c; /* Couleur jaune pour le soleil */
+  }
+  
+  .cloudy-weather {
+    /* Styles pour le temps nuageux */
+    background-color: #d3d3d3; /* Couleur grise pour les nuages */
+  }
+  
+  .rainy-weather {
+    /* Styles pour la pluie */
+        overflow: hidden;
+        position: relative;
+       .raindrop {
+         width: 2px;
+         height: 10px;
+          background-color: blue;
+          position: absolute;
+        }
+
+         @keyframes fall {
+         to {
+             transform: translateY(100vh);
+           }
+       }
+   }
+
+    .rainy-weather .raindrop {
+      animation: fall linear;
+   }
+  
+  .snowy-weather {
+    /* Styles pour la neige */
+    background-color: #ffffff; /* Couleur blanche pour la neige */
+  }
+  
+  .stormy-weather {
+    /* Styles pour l'orage */
+    background-color: #00008b; /* Couleur bleu foncé pour l'orage */
+  }
+  
+  .default-weather {
+    /* Styles par défaut */
+    background-color: #ccc; /* Couleur grise par défaut */
+  }
+  
